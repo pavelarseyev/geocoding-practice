@@ -1,0 +1,105 @@
+
+
+
+.wp-caption.aligncenter {
+    margin: 0 auto 20px;
+    text-align: center;
+}
+.wp-caption.alignleft {
+    margin: 0 auto 20px;
+    text-align: center;
+    @include media(">767px") {
+        float: left;
+        margin: 0 20px 20px 0;
+        text-align: left;
+    }
+}
+.wp-caption.alignright {
+    margin: 0 auto 20px;
+    text-align: center;
+    @include media(">767px") {
+        float: right;
+        margin: 0 0 20px 20px;
+        text-align: right;
+    }
+}
+
+
+
+img.aligncenter {
+    display: flex;
+    margin: 0 auto 20px;
+}
+img.alignleft {
+    display: flex;
+    margin: 0 auto 20px;
+    @include media(">767px") {
+        float: left;
+        margin: 0 20px 20px 0;
+    }
+}
+img.alignright {
+    display: flex;
+    margin: 0 auto 20px;
+    @include media(">767px") {
+        float: right;
+        margin: 0 0 20px 20px;
+    }
+}
+
+
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -10px;
+    .gallery-item {
+        margin: 0;
+        padding: 0 10px 20px;
+        width: 100%;
+        @include media(">767px") {
+            width: 50%;
+        }
+        @include media(">1200px") {
+            width: 25%;
+        }
+        img {
+            display: block;
+            width: 100%;
+        }
+    }
+}
+
+
+.commentlist {
+    li {
+        &:before {
+            display: none;
+        }
+    }
+    .comment-container {
+        margin: 0 0 20px;
+    }
+    .perma {
+        float: right;
+        margin: 0 0 0 20px;
+    }
+    .avatar {
+        float: left;
+        margin: 0 20px 20px 0;
+    }
+    .comment-entry {
+        overflow: hidden;
+        width: 100%;
+        .reply {
+            text-align: right;
+        }
+    }
+}
+
+.comment-form {
+    label {
+        display: block;
+    }
+}
+

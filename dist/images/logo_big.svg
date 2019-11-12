@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1391.9 1150">
+	<style>
+		.big-logo-path{opacity:.3271;fill-rule:evenodd;clip-rule:evenodd;fill:#81b6f8;enable-background:new}
+	</style>
+	<path d="M561 0h267.4c0 427.9 187.2 731 561.6 909.3-53.5 142.6-89.1 222.9-107 240.7C837.3 918.2 596.7 534.9 561 0z" class="big-logo-path"/>
+	<path d="M829 0H561.6c0 427.9-187.2 731-561.6 909.3 53.5 142.6 89.1 222.9 107 240.7C552.7 918.2 793.3 534.9 829 0z" class="big-logo-path"/>
+	<path d="M35 870c26.7 46.3 71.3 123.5 133.7 231.6 370.6-214 726.7-203.4 1068.3 31.7 96.8-117.6 148.4-188.6 155-213C968.4 650.2 516.1 633.4 35 870z" class="big-logo-path"/>
+</svg>

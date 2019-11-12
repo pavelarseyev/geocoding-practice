@@ -1,0 +1,108 @@
+// variables
+
+// colors
+$white: #fff;
+$black: #000;
+$blue: #5388F1;
+$lightblue: #81B6F8;
+$darkblue: #0F1F37;
+$darkgray: #0E131B;
+$gray: #636363;
+$semigray: #969696;
+$lightgray: #EBF5FC;
+$dimgray: #abb6d4;
+$red: #FF4A4A;
+$red-error: #e83232;
+
+$muli: 'Muli', sans-serif;
+$unna: 'Unna', serif;
+
+// grid settings
+$gl-colCount: 24;
+$gl-gridName: grid;
+$gl-colName: col;
+$gl-attributeName: class;
+$gl-gutter: 30px; // Total left + right
+$gl-gutter-vertical: 0;
+$gl-mq-width: 'min-width';
+$gl-mq-list: (
+    xs: 320px,
+    sm: 768px,
+    md: 1200px,
+    lg: 1800px
+);
+
+// media settings
+$breakpoints: (
+    mobile-landscape: 568px,
+    tablet: 768px,
+    tablet-landscape: 1024px,
+    desktop: 1200px,
+    medium-desktop: 1440px,
+    large-desktop: 1800px,
+    ultra-desktop: 2400px
+);
+
+$images-path: '../images/';
+
+html {
+    //height: 100%;
+    height: auto;
+    @supports (padding-top: 1px) {
+        height: auto;
+    }
+}
+
+body {
+    font-family: $muli;
+    background: $white;
+    -webkit-font-smoothing: antialiased;
+    color: $darkgray;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+
+    @include media('>=desktop') {
+        font-size: 17px;
+        line-height: 26px;
+    }
+
+    @include media('>=large-desktop') {
+        font-size: 22px;
+        line-height: 31px;
+    }
+}
+
+.main {
+    position: relative;
+    flex-shrink: 0;
+    flex-grow: 1;
+}
+
+.wrapper {
+    position: relative;
+    overflow-x: hidden;
+    width: 100%;
+    @include flex(column);
+    flex-shrink: 0;
+    flex-grow: 1;
+    min-height: 100vh;
+    height: 100%;
+}
+
+.header,
+.footer {
+    flex-shrink: 0;
+}
+
+
+a {
+    text-decoration: none;
+    outline: none;
+    color: inherit;
+}
+
+// forms
+
+
+

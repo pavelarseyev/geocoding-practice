@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="robots" content="noindex, follow">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="../css/style.css"/>
+	<title>Map</title>
+</head>
+
+<body class="home">
+<div class="wrapper">
+
+	<main class="main" id="main">
+		<form action="#" style="margin-bottom: 40px;">
+			zip:
+			<input type="text" id="zip">
+
+			<select name="" id="select" title="map zoom">
+				<option value="10" selected>10ml</option>
+				<option value="25">25ml</option>
+				<option value="50">50ml</option>
+			</select>
+
+			<input type="submit" value="Submit">
+			<input type="reset" value="Reset">
+		</form>
+
+		<div id="map" style="width: 600px; height: 400px; border: 2px solid black"></div>
+
+
+		<div class="addresses-list">
+
+		</div>
+	</main>
+
+</div>
+
+
+<script>
+    let addressesJSON = {
+        "item-0": {
+            "title": "BEYOND/HELLO BRISTOL",
+            "address": "2412-2414 Durham Rd Bristol, PA 19007 | MAP",
+            "link": "https://goo.gl/maps/vMQe6gSLje82",
+            "lat": 40.1316428,
+            "lng": -74.88707019999998
+        },
+        "item-1": {
+            "title": "BEYOND/HELLO PHILADELPHIA",
+            "address": "1206 Sansom Street Philadelphia, PA 19107 | MAP",
+            "link": "https://goo.gl/maps/a62k8MN9Ak82",
+            "lat": 39.9496079,
+            "lng": -75.16072159999999
+        },
+        "item-2": {
+            "title": "KEYSTONE SHOPS DEVON",
+            "address": "420 W Lancaster Ave Devon, PA 19333 | MAP",
+            "link": "https://goo.gl/maps/XiGGPR4TpEv",
+            "lat": 40.04490699999999,
+            "lng": -75.4301289
+        },
+        "item-3": {
+            "title": "RISE CARLISLE",
+            "address": "872 Harrisburg Pike Carlisle, PA 17013 | MAP",
+            "link": "https://goo.gl/maps/faj7PoKDeJr",
+            "lat": 40.21325119999999,
+            "lng": -77.17801500000002
+        },
+        "item-4": {
+            "title": "COLUMBIA CARE SCRANTON",
+            "address": "1740 N. Keyser Ave Scranton, PA 18508 | MAP",
+            "link": "https://goo.gl/maps/CLK2xS4gb2D2",
+            "lat": 41.4432811,
+            "lng": -75.6687038
+        },
+        "item-5": {
+            "title": "KEYSTONE SHOPS KING OF PRUSSIA",
+            "address": "1367 South Henderson Rd King of Prussia, PA 19406 | MAP",
+            "link": "https://goo.gl/maps/YVj8DVBvkY82",
+            "lat": 40.0758304,
+            "lng": -75.35300649999999
+        },
+        "item-6": {
+            "title": "RISE ERIE",
+            "address": "2108 West 8th St. Erie, PA 16505 | MAP",
+            "link": "https://goo.gl/maps/NLzQR1R2FSS2",
+            "lat": 42.110505,
+            "lng": -80.130788
+        },
+        "item-7": {
+            "title": "CURE LANCASTER",
+            "address": "1890 Fruitville Pike Lancaster, PA 17601 | MAP",
+            "link": "https://goo.gl/maps/CsKdFQRAyCS2",
+            "lat": 40.07346529999999,
+            "lng": -76.31990480000002
+        },
+        "item-8": {
+            "title": "KNOX MEDICAL",
+            "address": "648 Frederick St Hanover, PA 17331 | MAP",
+            "link": "https://goo.gl/maps/sjqGLDJ6GfD2",
+            "lat": 39.7910019,
+            "lng": -76.9945677
+        },
+        "item-9": {
+            "title": "RISE STEELTON",
+            "address": "801 South Front Street Steelton, PA 17113 | MAP",
+            "link": "https://goo.gl/maps/tBDvBw6xbpP2",
+            "lat": 40.225092,
+            "lng": -76.82742960000002
+        },
+        "item-10": {
+            "title": "CURE PHOENIXVILLE",
+            "address": "500 Kimberton Rd Phoenixville, PA 19460 | MAP",
+            "link": "https://goo.gl/maps/bKhY51ErtTU2",
+            "lat": 40.12992759999999,
+            "lng": -75.54718479999997
+        },
+        "item-11": {
+            "title": "LIBERTY PHILADELPHIA",
+            "address": "8900 Krewstown Rd Philadelphia, PA 19115 | MAP",
+            "link": "https://goo.gl/maps/XSSsRCgsCDs",
+            "lat": 40.0830926,
+            "lng": -75.04975230000002
+        },
+        "item-12": {
+            "title": "CY+ BUTLER",
+            "address": "201 Pillow Street Butler, PA 16001 | MAP",
+            "link": "https://goo.gl/maps/Xv2uXYSt6o72",
+            "lat": 40.8602995,
+            "lng": -79.9058468
+        },
+        "item-13": {
+            "title": "LIBERTY WEST NORRISTOWN",
+            "address": "2030 W Main St, Norristown, PA 19403 | MAP",
+            "link": "https://goo.gl/maps/myTSwEWJsAp ",
+            "lat": 40.13332219999999,
+            "lng": -75.37997480000001
+        },
+        "item-14": {
+            "title": "CY+ PITTSBURGH",
+            "address": "2116 Penn Ave. Pittsburgh, PA 15222 | MAP",
+            "link": "https://goo.gl/maps/rhz7K54syQR2",
+            "lat": 40.451934,
+            "lng": -79.98252789999998
+        },
+        "item-15": {
+            "title": "MISSION ALLENTOWN",
+            "address": "2733 W. Emmaus Avenue Allentown, PA 18103 | MAP",
+            "link": "https://goo.gl/maps/dEm2GhuXtAE2",
+            "lat": 40.56149,
+            "lng": -75.47788400000002
+        },
+        "item-16": {
+            "title": "NATURES MEDICINES STATE COLLEGE",
+            "address": "2105 N Atherton St State College, PA 16803 | MAP",
+            "link": "https://goo.gl/maps/gfWmCoCe6KG2",
+            "lat": 40.8101183,
+            "lng": -77.9097375
+        },
+        "item-17": {
+            "title": "JUSTICE GROWN",
+            "address": "7B Gateway Shopping Center Edwardsville, PA 18704 | MAP",
+            "link": "https://goo.gl/maps/8gNiPsDqg392",
+            "lat": 41.2572018,
+            "lng": -75.89909599999999
+        },
+        "item-18": {
+            "title": "ORGANIC REMEDIES ENOLA",
+            "address": "4425 Valley Rd Enola, PA 170251 | MAP",
+            "link": "https://goo.gl/maps/RrXn3dTV8h82",
+            "lat": 40.2896854,
+            "lng": -76.9726622
+        },
+        "item-19": {
+            "title": "THE HEALING CENTER WASHINGTON",
+            "address": "799 West Chestnut St. Washington, PA 15301 | MAP",
+            "link": "https://goo.gl/maps/3bL6fL73zPE2",
+            "lat": 40.1691991,
+            "lng": -80.2626449
+        },
+        "item-20": {
+            "title": "KEYSTONE CENTER OF INTEGRATIVE WELLNESS",
+            "address": "1490 High Street Williamsport, PA 17701 | MAP",
+            "link": "https://goo.gl/maps/z38CPL2qxLo",
+            "lat": 41.2446119,
+            "lng": -77.03631910000001
+        },
+        "item-21": {
+            "title": "ORGANIC REMEDIES CHAMBERSBURG",
+            "address": "900 Wayne Ave Chambersburg, PA 17201 | MAP",
+            "link": "https://goo.gl/maps/PcRGyBCPTiB2",
+            "lat": 39.9151722,
+            "lng": -77.65476719999998
+        },
+        "item-22": {
+            "title": "KEYSTONE CANNA REMEDIES BETHLEHEM",
+            "address": "1309 Stefko Blvd Bethlehem, PA 18017 | MAP",
+            "link": "https://goo.gl/maps/Vmtk6NJ3DU42",
+            "lat": 40.63544585557844,
+            "lng": "-75.39053978736984"
+        },
+        "item-23": {
+            "title": "RESTORE PHILADELPHIA",
+            "address": "957 Frankford Ave. Philadelphia, PA 19125 | MAP",
+            "link": "https://goo.gl/maps/D94ELgmAN6L2",
+            "lat": 39.96569889999999,
+            "lng": -75.13422700000001
+        },
+        "item-24": {
+            "title": "MAITRI MEDICINALS PITTSBURGH",
+            "address": "5845 Centre Ave Pittsburgh, PA 15206 | MAP",
+            "link": "https://goo.gl/maps/uP1tRaMbJCL2 ",
+            "lat": 40.4585871,
+            "lng": -79.93040020000001
+        },
+        "item-25": {
+            "title": "MAITRI MEDICINALS UNIONTOWN",
+            "address": "27 W Main St Uniontown, PA 15401 | MAP",
+            "link": "https://goo.gl/maps/hvxcipxYR4w ",
+            "lat": 39.9007606,
+            "lng": -79.726404
+        },
+        "item-26": {
+            "title": "LIBERTY BENSALEM",
+            "address": "4201 Neshaminy Blvd Bensalem, PA 19020 | MAP",
+            "link": "https://goo.gl/maps/UVRHywZmm4P2",
+            "lat": 40.1357605,
+            "lng": -74.9509253
+        },
+        "item-27": {
+            "title": "RESTORE ELKINS PARK",
+            "address": "8003 Old York Rd Elkins Park, PA 19027 | MAP",
+            "link": "https://goo.gl/maps/kb5824PMoLv ",
+            "lat": 40.0753925,
+            "lng": -75.12840510000001
+        },
+        "item-28": {
+            "title": "HERBOLOGY PHILADELPHIA",
+            "address": "1125 E Passyunk Ave Philadelphia, PA 19147 | MAP",
+            "link": "https://goo.gl/maps/wwitiey8Tpq ",
+            "lat": 39.935146,
+            "lng": -75.15668
+        },
+        "item-29": {
+            "title": "CURE PHILADELPHIA",
+            "address": "4502 City Ave Bala Cynwyd, PA 19004 | MAP",
+            "link": "https://goo.gl/maps/3MwN4fHu9e52 ",
+            "lat": 40.0030997,
+            "lng": -75.2216669
+        },
+        "item-30": {
+            "title": "COLUMBIA CARE ALLENTOWN",
+            "address": "3025 Tilghman St Allentown, PA 18104 | MAP",
+            "link": "https://goo.gl/maps/b45VHGm3gPs ",
+            "lat": 40.5988214,
+            "lng": -75.5254036
+        },
+        "item-31": {
+            "title": "HARVEST READING",
+            "address": "3225 N 5th Street Hwy Suite 1 Reading, PA 19605 | MAP",
+            "link": "https://goo.gl/maps/Yv2TUBwXXc92 ",
+            "lat": 40.3841695,
+            "lng": -75.9261654
+        },
+        "item-32": {
+            "title": "HERBOLOGY ALTOONA",
+            "address": "514 E. Pleasant Valley Blvd Altoona, PA 16602 | MAP",
+            "link": "https://goo.gl/maps/zfJvLmcJfUJ2 ",
+            "lat": 40.5216628,
+            "lng": -78.36945359999999
+        },
+        "item-33": {
+            "title": "HERBOLOGY GETTYSBURG",
+            "address": "19 Baltimore St Gettysburg, PA 17325 | MAP",
+            "link": "https://goo.gl/maps/siYu21j8Z4L2 ",
+            "lat": 39.83015839999999,
+            "lng": -77.2312475
+        },
+        "item-34": {
+            "title": "RISE YORK",
+            "address": "4395 W Market St York, PA 17408 | MAP",
+            "link": "https://goo.gl/maps/ehYbV9uMCv92 ",
+            "lat": 39.9294283,
+            "lng": -76.81985299999997
+        },
+        "item-35": {
+            "title": "THE HEALING CENTER MONROEVILLE",
+            "address": "130 Mall Cir Dr Monroeville, PA 15146 | MAP",
+            "link": "https://goo.gl/maps/fMyWwvRgzix ",
+            "lat": 40.4312895,
+            "lng": -79.79388489999997
+        },
+        "item-36": {
+            "title": "HERBOLOGY DUBOIS",
+            "address": "1222 S Brady St DuBois, PA 15801 | MAP",
+            "link": "https://goo.gl/maps/BFv9inNpLyE2 ",
+            "lat": 41.098258,
+            "lng": -78.77108299999998
+        },
+        "item-37": {
+            "title": "COLUMBIA CARE WILKES-BARRE",
+            "address": "765 Kidder Street Wilkes-Barre, PA 18702 | MAP",
+            "link": "https://goo.gl/maps/igbHFH1DLiM2 ",
+            "lat": 41.250194,
+            "lng": -75.84301529999999
+        },
+        "item-38": {
+            "title": "SOLEVO WELLNESS SQUIRREL HILL",
+            "address": "5600 Forward Ave Pittsburgh, PA 15217 | MAP",
+            "link": "https://goo.gl/maps/KnYYFHFdmzJ2",
+            "lat": 40.427748,
+            "lng": -79.92706900000002
+        },
+        "item-39": {
+            "title": "SOLEVO WELLNESS GREENSBURG",
+            "address": "305 E Pittsburgh St Greensburg, PA 15601 | MAP",
+            "link": "https://goo.gl/maps/p6X9okFkjSD2",
+            "lat": 40.30349769999999,
+            "lng": -79.53753410000002
+        },
+        "item-40": {
+            "title": "SOLEVO WELLNESS CRANBERRY",
+            "address": "22095 Perry Hwy Suite 301 Zelienople, PA 16063 | MAP",
+            "link": "https://goo.gl/maps/u2EWsdPAPCD2",
+            "lat": 40.7550415,
+            "lng": -80.1178208
+        }
+    }
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBK04nqVTOccf_UQ5airHZgru76FXnnUb4&libraries=geometry"></script>
+<script src="../js/global.js"></script>
+</body>
+</html>

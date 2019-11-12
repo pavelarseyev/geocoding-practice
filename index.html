@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Menu</title>
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+            html {
+                font: 20px/24px Arial, Helvetica, sans-serif;
+            }
+            body {
+                margin: 0;
+                background-color: black;
+            }
+            .wrapper {
+                display: flex;
+                flex-direction: column;
+            }
+            .holder {
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+                padding: 80px 30px;
+                align-items: center;
+                justify-content: center;
+            }
+            #project-pages-menu {
+                margin: 0;
+                padding: 0;
+                list-style: none;
+            }
+            #project-pages-menu li {
+                padding: 10px 0;
+            }
+            #project-pages-menu li a {
+                display: inline-block;
+                border: 1px solid #fccd10;
+                padding: 10px 20px;
+                text-decoration: none;
+                color: #fccd10;
+                transition: all .25s;
+            }
+            #project-pages-menu li a:hover {
+                text-decoration: none;
+                color: black;
+                background-color: #fccd10;
+            }
+            .logo {
+                position: absolute;
+                top: 30px;
+                left: 30px;
+            }
+            #project-name {
+                margin: 0 0 20px;
+                line-height: 36px;
+                font-size: 30px;
+                color: #fff;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="holder">
+
+                <h1 id="project-name"></h1>
+                <ul id="project-pages-menu"></ul>
+            </div>
+        </div>
+        <script>
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'pages.json', true);
+            xhr.send();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        var pages = JSON.parse(xhr.responseText);
+                        var parent = document.getElementById('project-pages-menu');
+                        document.getElementById('project-name').innerHTML = pages.pop();
+                        pages.forEach(function(page,i) {
+                            var li = document.createElement('li');
+                            var a = document.createElement('a');
+                            var text = page.split('/');
+                            a.setAttribute('href', './dist/html/' + page + '.html');
+                            a.innerHTML = text;
+                            li.appendChild(a);
+                            parent.appendChild(li);
+                        });
+                    }
+                }
+            };
+        </script>
+    </body>
+</html>

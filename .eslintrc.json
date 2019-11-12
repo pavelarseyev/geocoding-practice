@@ -1,0 +1,21 @@
+{
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "experimentalObjectRestSpread": true,
+            "jsx": true
+        }
+    },
+    "rules": {
+        "indent": ["error", 4],
+        "quotes": ["error", "double"],
+        "semi": ["error", "always"],
+        "space-before-function-paren": ["error", {
+            "anonymous": "always",
+            "named": "never",
+            "asyncArrow": "always"
+        }],
+        "one-var": ["error", "never"]
+    }
+}

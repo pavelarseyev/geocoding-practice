@@ -1,0 +1,231 @@
+
+@mixin bg ($posX: null, $posY: null, $sizeX: null, $sizeY: null) {
+    background: {
+        repeat: no-repeat;
+        position: $posX $posY;
+        size: $sizeX $sizeY;
+    }
+}
+@mixin pos ($pos: null, $top: null, $left: null, $bottom: null, $right: null) {
+    position: $pos;
+    right: $right;
+    bottom: $bottom;
+    @if ($top == "center" and $left == "center") {
+        top: 50%;
+        left: 50%;
+        transform: translateY(-50%) translateX(-50%);
+    }
+    @if($top == "center" and $left != "center") {
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    @if not($top == "center") {
+        top: $top;
+    }
+    @if($left == "center" and $top != "center") {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    @if not($left == "center") {
+        left: $left;
+    }
+}
+@mixin flex ($fd: null, $jc: null, $ai: null, $fw: null, $ac: null) {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -ms-flex-direction: $fd;
+    flex-direction: $fd;
+    justify-content: $jc;
+    align-items: $ai;
+    flex-wrap: $fw;
+    align-content: $ac;
+}
+
+
+
+
+// EXTEND
+
+// clearfix
+%clearfix {
+    &:after {
+        content: "";
+        display: block;
+        clear: both;
+    }
+}
+
+// hide text
+%hide-text {
+    overflow: hidden;
+    text-indent: 101%;
+    white-space: nowrap;
+}
+
+// full width
+%full-width {
+    margin-right: -9999px;
+    margin-left: -9999px;
+    padding-right: 9999px;
+    padding-left: 9999px;
+}
+
+// reset for list
+%reset-list {
+    margin: 0;
+    padding: 0;
+    li {
+        list-style: none;
+    }
+}
+
+// clear bullets for li
+%reset-list-bullets {
+    padding-left: 0;
+    &:before {
+        display: none;
+    }
+}
+
+// text ellipsis
+%ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+// justify nav
+%justify {
+    text-align: justify;
+    > * {
+        display: inline-block;
+        text-align: left;
+        vertical-align: top;
+    }
+    &:after {
+        content: "";
+        display: inline-block;
+        width: 100%;
+        vertical-align: top;
+    }
+}
+
+// icomoon
+%icon {
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    line-height: 1;
+    font: 'icomoon';
+    text-transform: none;
+    speak: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+
+// MIXIN
+
+// size
+@mixin size($width, $height: $width) {
+    width: $width;
+    height: $height;
+}
+
+// circle
+@mixin circle($width, $height: $width) {
+    border-radius: 50%;
+    width: $width;
+    height: $height;
+}
+
+// resizable font
+@mixin resizable-font($font-size: 14, $line-height: 20, $parent-font-size: 10) {
+    line-height: decimal-round(($line-height / $font-size),3) * 1em;
+    font-size: decimal-round(($font-size / $parent-font-size),3) * 1em;
+}
+
+// placeholder
+
+@mixin placeholder {
+  &::-webkit-input-placeholder {@content}
+  &:-moz-placeholder {opacity: 1; @content}
+  &::-moz-placeholder {opacity: 1; @content}
+  &:-ms-input-placeholder {@content}
+}
+
+// retina
+@mixin retina($image, $extension, $width, $height) {
+    background: url('../images/' + $image + '.' + $extension) no-repeat;
+    width: $width;
+    height: $height;
+
+    @media (min--moz-device-pixel-ratio: 1.3),
+    (-o-min-device-pixel-ratio: 2.6/2),
+    (-webkit-min-device-pixel-ratio: 1.3),
+    (min-device-pixel-ratio: 1.3),
+    (min-resolution: 1.3dppx) {
+        background-image: url('../images/' + $image + '-2x' + '.' + $extension);
+        background-size: $width $height;
+    }
+}
+
+// linear gradient
+@mixin linear-gradient($from-color, $to-color) {
+    background-color: $to-color;
+    background: -webkit-linear-gradient(top, $from-color 0%, $to-color 100%);
+    background: linear-gradient(to bottom, $from-color 0%, $to-color 100%);
+}
+
+@mixin animate($dur) {
+    transition: all $dur+'s' linear 0s;
+}
+
+/// font-smothing
+/// @include font-smoothing(on);
+/// @include font-smoothing(off);
+@mixin font-smoothing($value:on){
+    @if $value == on{
+        -webkit-font-smoothing:antialiased;
+        -moz-osx-font-smoothing:grayscale;
+    }
+    @else{
+        -webkit-font-smoothing:subpixel-antialiased;
+        -moz-osx-font-smoothing:auto;
+    }
+}
+
+// round decimals function
+@function decimal-round($number, $digits: 3, $mode: round) {
+    $n: 1;
+    // $number must be a number
+    @if type-of($number) != number {
+        @warn '#{ $number } is not a number.';
+        @return $number;
+    }
+    // $digits must be a unitless number
+    @if type-of($digits) != number {
+        @warn '#{ $digits } is not a number.';
+        @return $number;
+    } @else if not unitless($digits) {
+        @warn '#{ $digits } has a unit.';
+        @return $number;
+    }
+    @for $i from 1 through $digits {
+        $n: $n * 10;
+    }
+    @if $mode == round {
+        @return round($number * $n) / $n;
+    } @else if $mode == ceil {
+        @return ceil($number * $n) / $n;
+    } @else if $mode == floor {
+        @return floor($number * $n) / $n;
+    } @else {
+        @warn '#{ $mode } is undefined keyword.';
+        @return $number;
+    }
+}
